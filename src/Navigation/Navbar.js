@@ -5,8 +5,9 @@ import "../App.css";
 export default function Navbar() {
   return (
     <div className="navbar">
+      <h2>Ben's Pets</h2>
       <NavLink className="nav-link" to="/">
-        Home
+        Main
       </NavLink>
       <NavLink className="nav-link" to="/products">
         Products
