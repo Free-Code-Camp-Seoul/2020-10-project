@@ -23,6 +23,9 @@ jobs:
           path: node_modules
           key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
+      - name: install dependencies
+        run: npm install
+
       - name: build
         run: npm run build
 
