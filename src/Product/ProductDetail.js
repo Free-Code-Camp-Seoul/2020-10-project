@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import {addInCart} from "../common/lib/localStorage";
 
 import { data } from "../Data/data";
+
+import CartContext from "../Cart/models/CartContext";
+
 
 export default function ProductDetail(props) {
     const productUid = window.location.href.split('/').pop();
@@ -10,11 +14,14 @@ export default function ProductDetail(props) {
     const productData = (data.products).filter(item=> item.uid.toString() === productUid? true:false)[0];
     // console.log("props: ", props)
 
+    const {buyProduct} = useContext(CartContext);
+
+
     if(!productData) return <div></div>
+
+
     console.log("productData: ", productData);
-    const buyProduct=()=>{
-        addInCart({userId:'sam', productId:productData.uid, quantity:1});
-    }
+
 
 
   return (
@@ -35,7 +42,7 @@ export default function ProductDetail(props) {
                   <p>{productData.productSummary}</p>
                   <p> Price  $<span>{productData.price}</span>              </p>
               </div>
-              <div className="product-price-btn" onClick={e=>buyProduct()}>
+              <div className="product-price-btn" onClick={e=>  buyProduct({productData})}>
                   <button type="button">buy now</button>
               </div>
           </div>

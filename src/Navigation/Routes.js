@@ -7,17 +7,23 @@ import ProductDetail from "../Product/ProductDetail";
 import Admin from "../Admin/Admin";
 import ShoppingCart from "../Cart/ShoppingCart";
 import NotFound from "../Errors/NotFound";
+import CartContext from "../Cart/models/CartContext";
 
 export default function Routes() {
   return (
     <div>
       <Switch>
         <Route  path="/products/:id">
-          <ProductDetail  />
+          <CartContext.Provider>
+            <ProductDetail  />
+          </CartContext.Provider>
         </Route>
 
         <Route path="/products">
-          <Products />
+          <CartContext.Provider>
+            <Products />
+          </CartContext.Provider>
+
         </Route>
         <Route path="/admin">
           <Admin />

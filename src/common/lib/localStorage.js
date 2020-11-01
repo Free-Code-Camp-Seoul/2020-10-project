@@ -14,6 +14,8 @@ const addInCart =({userId, productId, quantity})=>{
         console.log("allDataInCart: ",allDataInCart)
         localStorage.setItem('cart', JSON.stringify(allDataInCart));
         alert("cart is updated");
+
+        return allDataInCart;
     }catch (e) {
         console.error("error: ",e);
         alert("cart updated failed");

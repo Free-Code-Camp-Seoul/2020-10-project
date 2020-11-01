@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext,useReducer }from "react";
 import { NavLink } from "react-router-dom";
 import "../App.css";
 import {getListInCart} from "../common/lib/localStorage"
+import CartContext from "../Cart/models/CartContext";
 
+const CartCount = ()=>{
+    const {allDataInCart=[]} = useContext(CartContext);
+    console.log("allDataInCart:",allDataInCart);
+    const [count, setCount] = useReducer((state, item)=>[...state,item], allDataInCart.length||0)
+
+    return (<div>
+        Cart ({count})
+    </div>)
+}
 export default function Navbar() {
   return (
     <div className="navbar">
@@ -17,7 +27,9 @@ export default function Navbar() {
         Admin
       </NavLink>
       <NavLink className="nav-link" to="/cart">
-        Cart ({(getListInCart()||[]).length})
+          <CartContext.Provider>
+             <CartCount/>
+          </CartContext.Provider>
       </NavLink>
     </div>
   );
