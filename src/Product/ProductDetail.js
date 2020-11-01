@@ -1,5 +1,5 @@
 import React from "react";
-
+import {addInCart} from "../common/lib/localStorage";
 
 import { data } from "../Data/data";
 
@@ -11,7 +11,10 @@ export default function ProductDetail(props) {
     // console.log("props: ", props)
 
     if(!productData) return <div></div>
-    console.log("productData: ", productData)
+    console.log("productData: ", productData);
+    const buyProduct=()=>{
+        addInCart({userId:'sam', productId:productData.uid, quantity:1});
+    }
 
 
   return (
@@ -32,7 +35,7 @@ export default function ProductDetail(props) {
                   <p>{productData.productSummary}</p>
                   <p> Price  $<span>{productData.price}</span>              </p>
               </div>
-              <div className="product-price-btn">
+              <div className="product-price-btn" onClick={e=>buyProduct()}>
                   <button type="button">buy now</button>
               </div>
           </div>
