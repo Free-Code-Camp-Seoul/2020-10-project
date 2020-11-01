@@ -1,6 +1,12 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": "root.child('roles').child('admin').child(auth.token.email.replace('.', '%2E')).exists()",
+    "public": {
+      ".read": true
+    },
+    "roles": {
+      ".read": "root.child('roles').child('admin').child(auth.token.email.replace('.', '%2E')).exists()"
+    }
   }
 }
