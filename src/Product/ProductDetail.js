@@ -7,7 +7,7 @@ export default function ProductDetail(props) {
     const productUid = window.location.href.split('/').pop();
     console.log("props: ", productUid)
     console.log("data: ",data);
-    const productData = (data.products).filter(item=> item.uid == productUid? true:false)[0];
+    const productData = (data.products).filter(item=> item.uid.toString() === productUid? true:false)[0];
     // console.log("props: ", props)
 
     if(!productData) return <div></div>
@@ -27,6 +27,9 @@ export default function ProductDetail(props) {
                   <h1>{productData.name}</h1>
                   <h2>by Ben's Pets</h2>
                   <p>{productData.descriptions}</p>
+              </div>
+              <div>
+                  <p>{productData.productSummary}</p>
               </div>
               <div className="product-price-btn">
                   <p>
