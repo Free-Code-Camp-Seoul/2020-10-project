@@ -8,14 +8,15 @@ const addInCart =({userId, productId, quantity})=>{
         if(productHistory){
             let quantityInCart = parseInt(productHistory['quantity']);
             allDataInCart[productId]['quantity']  = quantityInCart + quantity;
+            alert("quantity incremented");
         }else{
             allDataInCart[productId] =  {productId,userId,quantity};
+            alert("new item added to cart");
         }
         console.log("allDataInCart: ",allDataInCart)
         localStorage.setItem('cart', JSON.stringify(allDataInCart));
-        alert("cart is updated");
 
-        return allDataInCart;
+
     }catch (e) {
         console.error("error: ",e);
         alert("cart updated failed");
