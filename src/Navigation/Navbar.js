@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../App.css";
+import {getListInCart} from "../common/lib/localStorage"
 
 export default function Navbar() {
   return (
@@ -16,7 +17,7 @@ export default function Navbar() {
         Admin
       </NavLink>
       <NavLink className="nav-link" to="/cart">
-        Cart
+        Cart ({(getListInCart()||[]).length})
       </NavLink>
     </div>
   );
