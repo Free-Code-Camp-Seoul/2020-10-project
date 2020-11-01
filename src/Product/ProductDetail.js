@@ -26,15 +26,13 @@ export default function ProductDetail(props) {
               <div className="product-text">
                   <h1>{productData.name}</h1>
                   <h2>by Ben's Pets</h2>
-                  <p>{productData.descriptions}</p>
+                  <p>{productData.description}</p>
               </div>
               <div>
                   <p>{productData.productSummary}</p>
+                  <p> Price  $<span>{productData.price}</span>              </p>
               </div>
               <div className="product-price-btn">
-                  <p>
-                      $<span>{productData.price}</span>
-                  </p>
                   <button type="button">buy now</button>
               </div>
           </div>

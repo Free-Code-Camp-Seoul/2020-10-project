@@ -18,7 +18,7 @@ export default function ProductItem({ item }) {
         <div class="product-text">
           <h1>{item.name}</h1>
           <h2>by Ben's Pets</h2>
-          <p>{item.descriptions}</p>
+          <p>{item.description}</p>
         </div>
         <div class="product-price-btn">
           <p>
