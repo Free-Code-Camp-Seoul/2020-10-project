@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useStorage from "./models/useStorage";
+import useDatabase from "./models/useDatabase";
+
+import "./admin.css";
+
+// Components
+import ProgressBar from "./components/ProgressBar";
 
 export default function AddProduct() {
   const [preview, setPreview] = useState(null);
+  const [selection, setSelection] = useState(null);
   const [productName, setProductName] = useState("");
   const types = ["image/png", "image/jpeg"];
+  const [file, setFile] = useState(null);
+  const { progress, url, error } = useStorage(file);
+  const [product, setProduct] = useState(null);
+  useDatabase(product);
 
   const newProduct = {
-    // imgUrl: imgUrl,
-    productname: productName,
+    name: productName,
+    url: url,
   };
 
   const handleAddImage = (e) => {
@@ -15,35 +27,44 @@ export default function AddProduct() {
 
     if (selected && types.includes(selected.type)) {
       setPreview(URL.createObjectURL(selected));
+      setSelection(selected);
     } else {
       setPreview(null);
+      setSelection(null);
     }
   };
 
   const handleOnChange = (e) => {
     setProductName(e.target.value);
   };
-  console.log(productName);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //1. Send image to database
-    //2. Retrieve the url of the image
-    //3. Add the URL to the new Product Obejct
-    //4. Submit the onject to the database
-
-    console.log("submit handled");
+    //1. Send image to storage
+    setFile(selection); // This will fire the useStorage Hook
+    // When the url has returned then we can send the product to the database using the useEffect below
   };
+
+  useEffect(() => {
+    if (url) {
+      setFile(null);
+      setProduct(newProduct); // This will fire the useDatabase Hook
+    }
+  }, [url]);
 
   return (
     <div>
       <h4>Add image</h4>
-      <input type="file" onChange={handleAddImage} />
+      {error && <h1>{error}</h1>}
+      {progress && <ProgressBar progress={progress} />}
       <div className="image-container">
         {preview && (
           <img src={preview} alt={preview.name} className="main-image"></img>
         )}
       </div>
+      {url && <h6>File Upload to: {url}</h6>}
+      <input type="file" onChange={handleAddImage} />
+
       {preview && <div>{preview.name}</div>}
 
       {/* // INPUT FORM  */}
@@ -57,8 +78,8 @@ export default function AddProduct() {
             value={productName}
           ></input>
         </div>
+        <button type="submit">Submit</button>
       </form>
-      <button type="submit">Submit</button>
     </div>
   );
 }
