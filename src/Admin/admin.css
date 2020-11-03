@@ -1,0 +1,11 @@
+.main-image {
+  height: 300px;
+  max-width: 100%;
+}
+
+/* progress bar styles */
+.progress-bar {
+  height: 20px;
+  background: pink;
+  margin-top: 20px;
+}
