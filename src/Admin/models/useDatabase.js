@@ -1,32 +1,26 @@
 import { useState, useEffect } from "react";
 import firebase from "../../common/lib/firebase";
+import { v4 as uuidv4 } from "uuid";
 
-const useDatabase = (collection) => {
-  const [docs, setDocs] = useState([]);
+const useDatabase = (file) => {
+  // const [docs, setDocs] = useState([]);
+  const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    if (!collection) return;
+    if (!file) return;
     console.log("creating new product...");
-    console.log(collection);
-    // const projectDatabase = firebase.database();
+    console.log(file);
+    const projectDatabase = firebase.database();
 
-    // const unsub = projectDatabase
-    //   .collection(collection)
-    //   .orderBy("createdAt", "desc")
-    //   .onSnapshot((snap) => {
-    //     let documents = [];
-    //     snap.forEach((doc) => {
-    //       documents.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setDocs(documents);
-    //   });
+    try {
+      projectDatabase.ref(`public/data/products/${uuidv4()}`).set(file);
+      setMsg("Product Added");
+    } catch (error) {
+      setMsg(error);
+    }
+  }, [file]);
 
-    // return () => unsub();
-    // // this is a cleanup function that react will run when
-    // // a component using the hook unmounts
-  }, [collection]);
-
-  return { docs };
+  return { msg };
 };
 
 export default useDatabase;

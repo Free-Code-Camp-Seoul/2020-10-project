@@ -8,19 +8,35 @@ import "./admin.css";
 import ProgressBar from "./components/ProgressBar";
 
 export default function AddProduct() {
+  const initialValues = {
+    name: "",
+    summary: "",
+    description: "",
+    price: 0.0,
+    noAvailable: 1,
+    forSale: true,
+    featured: false,
+  };
+
   const [preview, setPreview] = useState(null);
   const [selection, setSelection] = useState(null);
-  const [productName, setProductName] = useState("");
+  const [fields, setFields] = useState(initialValues);
   const types = ["image/png", "image/jpeg"];
   const [file, setFile] = useState(null);
-  const { progress, url, error } = useStorage(file);
   const [product, setProduct] = useState(null);
-  useDatabase(product);
 
-  const newProduct = {
-    name: productName,
-    url: url,
-  };
+  // Custsom API Hooks
+  const { progress, url, error } = useStorage(file);
+  const { msg } = useDatabase(product);
+
+  console.log(msg);
+
+  // const newProduct = {
+  //   ...fields,
+  //   url: url, // get from firestore
+  // };
+
+  // console.log(fields);
 
   const handleAddImage = (e) => {
     let selected = e.target.files[0]; // This will select only ONE file
@@ -35,7 +51,10 @@ export default function AddProduct() {
   };
 
   const handleOnChange = (e) => {
-    setProductName(e.target.value);
+    setFields({
+      ...fields,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
@@ -48,9 +67,11 @@ export default function AddProduct() {
   useEffect(() => {
     if (url) {
       setFile(null);
-      setProduct(newProduct); // This will fire the useDatabase Hook
+      setProduct({ ...fields, url }); // This will fire the useDatabase Hook
     }
   }, [url]);
+
+  console.log(product);
 
   return (
     <div>
@@ -68,18 +89,76 @@ export default function AddProduct() {
       {preview && <div>{preview.name}</div>}
 
       {/* // INPUT FORM  */}
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div className="input">
-          <label>Product Name</label>
-          <input
-            type="text"
-            name="product-name"
-            onChange={handleOnChange}
-            value={productName}
-          ></input>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+      <div className="form-inputs">
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          <div className="input">
+            <label>Product Name</label>
+            <input
+              type="text"
+              name="name"
+              onChange={handleOnChange}
+              value={fields.name}
+            ></input>
+          </div>
+          <div className="input">
+            <label>Product Summary</label>
+            <input
+              type="text"
+              name="summary"
+              onChange={handleOnChange}
+              value={fields.summary}
+            ></input>
+          </div>
+          <div className="input">
+            <label>Product Description</label>
+            <input
+              type="text"
+              name="description"
+              onChange={handleOnChange}
+              value={fields.description}
+            ></input>
+          </div>
+          <div className="input">
+            <label>Price</label>
+            <input
+              type="number"
+              name="price"
+              onChange={handleOnChange}
+              value={fields.price}
+            ></input>
+          </div>
+          <div className="input">
+            <label>No Available</label>
+            <input
+              type="number"
+              name="noAvailable"
+              onChange={handleOnChange}
+              value={fields.noAvailable}
+            ></input>
+          </div>
+          <div className="input">
+            <label>For Sale</label>
+            <input
+              type="radio" // logic required
+              checked={fields.forSale}
+              name="forSale"
+              onChange={handleOnChange}
+              value={fields.forSale}
+            ></input>
+          </div>
+          <div className="input">
+            <label>Featured</label>
+            <input
+              type="radio" // logic required
+              checked={fields.featured}
+              name="featured"
+              onChange={handleOnChange}
+              value={fields.featured}
+            ></input>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }
