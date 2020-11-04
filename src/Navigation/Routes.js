@@ -23,7 +23,9 @@ export default function Routes() {
                     <Admin/>
                 </Route>
                 <Route path="/cart">
-                    <ShoppingCart/>
+                    <CartContext.Provider>
+                        <ShoppingCart/>
+                    </CartContext.Provider>
                 </Route>
                 <Route path="/" exact>
                     <Main/>

@@ -1,6 +1,6 @@
 import {useState, createContext, useEffect, useReducer} from "react";
 
-import {addInCart, getListInCart} from "../../common/lib/localStorage";
+import {addInCart, getListInCart, removeFromCart} from "../../common/lib/localStorage";
 
 const CartContext = createContext(null);
 
@@ -17,8 +17,12 @@ const Provider = (props) => {
         addInCart({userId: 'sam', productId: productData.uid, quantity: 1});
         setAllDataInCart(getListInCart()); //update the state to notify other component
     }
+    const removeProduct = ({productData}) => {
+        removeFromCart({userId: 'sam', productId: productData.uid, quantity: 1});
+        setAllDataInCart(getListInCart()); //update the state to notify other component
+    }
     return (
-        <P value={{buyProduct, allDataInCart}}  {...props} />
+        <P value={{buyProduct, allDataInCart, removeProduct}}  {...props} />
     );
 };
 

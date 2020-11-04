@@ -1,48 +1,80 @@
-const addInCart =({userId, productId, quantity})=>{
-    if(!userId || !productId || !quantity) return   alert("cart params missing");
+const addInCart = ({userId, productId, quantity}) => {
+    if (!userId || !productId || !quantity) return alert("cart params missing");
 
-    try{
+    try {
         const dataInString = localStorage.getItem('cart') || '{}';
         const allDataInCart = JSON.parse(dataInString);
         const productHistory = allDataInCart[productId];
-        if(productHistory){
+        if (productHistory) {
             let quantityInCart = parseInt(productHistory['quantity']);
-            allDataInCart[productId]['quantity']  = quantityInCart + quantity;
+            allDataInCart[productId]['quantity'] = quantityInCart + quantity;
             alert("quantity incremented");
-        }else{
-            allDataInCart[productId] =  {productId,userId,quantity};
+        } else {
+            allDataInCart[productId] = {productId, userId, quantity};
             alert("new item added to cart");
         }
-        console.log("allDataInCart: ",allDataInCart)
+        console.log("allDataInCart: ", allDataInCart)
         localStorage.setItem('cart', JSON.stringify(allDataInCart));
 
 
-    }catch (e) {
-        console.error("error: ",e);
+    } catch (e) {
+        console.error("error: ", e);
         alert("cart updated failed");
 
     }
 
 }
-const getListInCart = ()=>{
+const removeFromCart = ({userId, productId, quantity}) => {
+    if (!userId || !productId || !quantity) return alert("cart params missing");
 
-    try{
+    try {
+        const dataInString = localStorage.getItem('cart') || '{}';
+        const allDataInCart = JSON.parse(dataInString);
+        const productHistory = allDataInCart[productId];
+        if (!productHistory) return;
+
+        let quantityInCart = parseInt(productHistory['quantity']);
+        allDataInCart[productId]['quantity'] = quantityInCart - quantity;
+
+        if (allDataInCart[productId]['quantity'] === 0) {
+            delete allDataInCart[productId];
+            alert("product removed from cart")
+        } else {
+            alert("quantity decreased");
+
+        }
+
+
+        console.log("allDataInCart: ", allDataInCart)
+        localStorage.setItem('cart', JSON.stringify(allDataInCart));
+
+
+    } catch (e) {
+        console.error("error: ", e);
+        alert("cart updated failed");
+
+    }
+
+}
+const getListInCart = () => {
+
+    try {
         const dataInString = localStorage.getItem('cart') || '{}';
         const allDataInCart = JSON.parse(dataInString);
         let productList = [];
-        if(!allDataInCart) return productList;
-        for(const [key,val] of Object.entries(allDataInCart)){
+        if (!allDataInCart) return productList;
+        for (const [key, val] of Object.entries(allDataInCart)) {
             console.log(key, val);
             productList.push(val);
         }
 
         return productList;
 
-    }catch (e) {
-        console.error("error: ",e);
+    } catch (e) {
+        console.error("error: ", e);
 
 
     }
 }
 
-export  {addInCart,getListInCart};
+export {addInCart, getListInCart, removeFromCart};
