@@ -4,6 +4,8 @@ import AdminUser from "./models/AdminUser";
 import Login from "./Login";
 import AdminIndex from "./AdminIndex";
 
+import AddProduct from "./AddProduct";
+
 const AdminRouter = () => {
   const [{ user, init }] = useContext(AdminUser);
   const authenticated = Boolean(user);
@@ -19,6 +21,7 @@ const AdminRouter = () => {
     <Switch>
       <Route path={`${current}`}>
         <AdminIndex />
+        <AddProduct />
       </Route>
     </Switch>
   );
