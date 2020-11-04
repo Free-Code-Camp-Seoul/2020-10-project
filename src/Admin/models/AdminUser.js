@@ -5,10 +5,6 @@ import firebase from "../../common/lib/firebase";
 
 const fbprovider = new firebase.auth.GoogleAuthProvider();
 
-// const AdminUser = createContext(null);
-
-// const P = AdminUser.Provider;
-
 const initialState = {
   initializing: false,
   init: false,
@@ -46,6 +42,8 @@ const actions = {
       store.setState({ init: true });
     });
   },
+  setInitializing: (store) =>
+    store.setState({ ...store.state, initializing: true }),
   setInit: (store) =>
     store.setState({ ...store.state, initializing: false, init: true }),
   setUser: (store, user) => store.setState({ ...store.state, user }),

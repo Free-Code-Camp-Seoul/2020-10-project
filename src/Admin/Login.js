@@ -7,7 +7,6 @@ import useAdminUser from "./models/AdminUser";
 const Login = () => {
   // eslint-disable-next-line no-unused-vars
   const [{ error }, { signin: adminUserSignin, setError }] = useAdminUser();
-  console.log(setError);
   const signin = () => {
     setError(null);
     adminUserSignin();
