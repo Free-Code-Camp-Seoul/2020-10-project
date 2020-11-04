@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import AdminUser from "./models/AdminUser";
+import React from "react";
+import useAdminUser from "./models/AdminUser";
 
 const AdminIndex = () => {
   // eslint-disable-next-line no-unused-vars
-  const [_state, _signin, signout] = useContext(AdminUser);
+  const [_, { signout }] = useAdminUser();
 
   return (
     <div>
