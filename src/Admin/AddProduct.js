@@ -31,13 +31,6 @@ export default function AddProduct() {
 
   console.log(msg);
 
-  // const newProduct = {
-  //   ...fields,
-  //   url: url, // get from firestore
-  // };
-
-  // console.log(fields);
-
   const handleAddImage = (e) => {
     let selected = e.target.files[0]; // This will select only ONE file
 
@@ -51,11 +44,16 @@ export default function AddProduct() {
   };
 
   const handleOnChange = (e) => {
+    const fieldName = e.target.name;
+    const fieldValue =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
     setFields({
       ...fields,
-      [e.target.name]: e.target.value,
+      [fieldName]: fieldValue,
     });
   };
+
+  console.log(fields);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,100 +62,115 @@ export default function AddProduct() {
     // When the url has returned then we can send the product to the database using the useEffect below
   };
 
-  useEffect(() => {
-    if (url) {
-      setFile(null);
-      setProduct({ ...fields, url }); // This will fire the useDatabase Hook
-    }
-  }, [url]);
-
-  console.log(product);
+  // useEffect(() => {
+  //   if (url) {
+  //     setFile(null);
+  //     setProduct({ ...fields, url }); // This will fire the useDatabase Hook
+  //   }
+  // }, [url]);
 
   return (
     <div>
-      <h4>Add image</h4>
+      <h4>Add New Product</h4>
       {error && <h1>{error}</h1>}
       {progress && <ProgressBar progress={progress} />}
-      <div className="image-container">
-        {preview && (
-          <img src={preview} alt={preview.name} className="main-image"></img>
-        )}
-      </div>
-      {url && <h6>File Upload to: {url}</h6>}
-      <input type="file" onChange={handleAddImage} />
-
-      {preview && <div>{preview.name}</div>}
 
       {/* // INPUT FORM  */}
       <div className="form-inputs">
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="input">
-            <label>Product Name</label>
-            <input
-              type="text"
-              name="name"
-              onChange={handleOnChange}
-              value={fields.name}
-            ></input>
+        <div className="section">
+          <div className="image-container">
+            {preview && (
+              <img
+                src={preview}
+                alt={preview.name}
+                className="main-image"
+              ></img>
+            )}
           </div>
-          <div className="input">
-            <label>Product Summary</label>
-            <input
-              type="text"
-              name="summary"
-              onChange={handleOnChange}
-              value={fields.summary}
-            ></input>
+          {preview && <div>{preview.name}</div>}
+          {url && <h6>File Upload to: {url}</h6>}
+          <div className="image-button-section">
+            <input type="file" onChange={handleAddImage} />
           </div>
-          <div className="input">
-            <label>Product Description</label>
-            <input
-              type="text"
-              name="description"
-              onChange={handleOnChange}
-              value={fields.description}
-            ></input>
-          </div>
-          <div className="input">
-            <label>Price</label>
-            <input
-              type="number"
-              name="price"
-              onChange={handleOnChange}
-              value={fields.price}
-            ></input>
-          </div>
-          <div className="input">
-            <label>No Available</label>
-            <input
-              type="number"
-              name="noAvailable"
-              onChange={handleOnChange}
-              value={fields.noAvailable}
-            ></input>
-          </div>
-          <div className="input">
-            <label>For Sale</label>
-            <input
-              type="radio" // logic required
-              checked={fields.forSale}
-              name="forSale"
-              onChange={handleOnChange}
-              value={fields.forSale}
-            ></input>
-          </div>
-          <div className="input">
-            <label>Featured</label>
-            <input
-              type="radio" // logic required
-              checked={fields.featured}
-              name="featured"
-              onChange={handleOnChange}
-              value={fields.featured}
-            ></input>
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+        </div>
+        <div className="section">
+          <form autoComplete="off" onSubmit={handleSubmit}>
+            <div className="input">
+              <label>Product Name</label>
+              <input
+                className="text-input"
+                type="text"
+                name="name"
+                onChange={handleOnChange}
+                value={fields.name}
+              ></input>
+            </div>
+            <div className="input">
+              <label>Product Summary</label>
+              <textarea
+                className="text-input"
+                // type="text"
+                rows="3"
+                cols="16"
+                name="summary"
+                onChange={handleOnChange}
+                value={fields.summary}
+              ></textarea>
+            </div>
+            <div className="input">
+              <label>Product Description</label>
+              <textarea
+                className="text-input"
+                rows="5"
+                cols="16"
+                name="description"
+                onChange={handleOnChange}
+                value={fields.description}
+              ></textarea>
+            </div>
+            <div className="input">
+              <label>Price</label>
+              <input
+                className="text-input text-right"
+                type="number"
+                name="price"
+                onChange={handleOnChange}
+                value={fields.price}
+              ></input>
+            </div>
+            <div className="input">
+              <label>No Available</label>
+              <input
+                className="text-input text-right"
+                type="number"
+                name="noAvailable"
+                onChange={handleOnChange}
+                value={fields.noAvailable}
+              ></input>
+            </div>
+            <div className="input">
+              <label>For Sale</label>
+              <input
+                type="checkbox"
+                name="forSale"
+                onChange={handleOnChange}
+                value={fields.forSale}
+                checked={fields.forSale}
+              ></input>
+            </div>
+            <div className="input">
+              <label>Featured</label>
+              <input
+                type="checkbox"
+                name="featured"
+                onChange={handleOnChange}
+                value={fields.featured}
+                checked={fields.featured}
+              ></input>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
   );
