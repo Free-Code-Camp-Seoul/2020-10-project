@@ -21,6 +21,7 @@ const AdminRouter = () => {
     <Switch>
       <Route path={`${current}`}>
         <AdminIndex />
+
         <AddProduct />
       </Route>
     </Switch>
