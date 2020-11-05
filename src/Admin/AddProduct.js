@@ -62,12 +62,12 @@ export default function AddProduct() {
     // When the url has returned then we can send the product to the database using the useEffect below
   };
 
-  // useEffect(() => {
-  //   if (url) {
-  //     setFile(null);
-  //     setProduct({ ...fields, url }); // This will fire the useDatabase Hook
-  //   }
-  // }, [url]);
+  useEffect(() => {
+    if (url) {
+      setFile(null);
+      setProduct({ ...fields, url }); // This will fire the useDatabase Hook
+    }
+  }, [url]);
 
   return (
     <div>

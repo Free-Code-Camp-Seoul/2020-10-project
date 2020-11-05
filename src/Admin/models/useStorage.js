@@ -8,10 +8,6 @@ export const useStorage = (file) => {
 
   useEffect(() => {
     if (!file) return;
-    console.log(typeof file);
-
-    console.log("Storage Hook Fired");
-    console.log(file.name);
 
     const projectStorage = firebase.storage();
 
