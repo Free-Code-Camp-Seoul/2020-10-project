@@ -21,12 +21,6 @@
   max-width: 100%;
 }
 
-.image-container {
-  border: 1px black solid;
-  height: 300px;
-  max-width: 100%;
-}
-
 .image-button-section {
 }
 
@@ -47,6 +41,7 @@
   max-width: 90%;
   justify-content: center;
   padding: 2rem;
+  background-color: white;
 }
 .input {
   margin: 1rem;
@@ -67,4 +62,21 @@
 label {
   margin-right: 1rem;
   padding: 8px;
+}
+
+/* Grid Items */
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-columns: auto;
+  gap: 2em;
+  max-width: 300px;
+}
+
+.item {
+  min-height: 300px;
+  max-width: 400px;
+  background-color: white;
+  border-radius: 6px;
 }
