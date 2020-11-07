@@ -10,9 +10,48 @@
     background-color: #fdf1ec;
   }
    */
+
+
+/* 
+.front .wrapper {
+   position: relative;
+   width:300px;
+}
+.back .wrapper {
+   position: relative;
+   width:300px;
+   padding: 10px;
+}
+.front{
+  backface-visibility: hidden;
+  position: absolute;
+}
+.back{
+  background: #198FF7;
+  transform:rotateY(180deg);
+  backface-visibility: hidden;
+  text-align: justify;
+  position: relative;
+  font-family: ;
+  top: 0;
+  width:300px;
+  height: 450px;
+}
+.rotator{
+  transition:transform 1s;
+  transform-style: preserve-3d;
+  cursor: progress;
+  position: relative;
+}
+.rotator.is-flipped{
+  transform:rotateY(180deg);
+  position:relative;
+  cursor: default;
+} */
+
 .wrapper {
   height: 420px;
-  width: 654px;
+  width: 300px;
   margin: 50px auto;
   border-radius: 7px 7px 7px 7px;
   /* VIA CSS MATIC https://goo.gl/cIbnS */
@@ -22,35 +61,32 @@
 }
 
 .product-img {
-  float: left;
-  height: 420px;
-  width: 327px;
+  height: 210px;
+  width: 300px;
 }
 
 .product-img img {
-  border-radius: 7px 0 0 7px;
+  border-radius: 7px 7px 0 0;
 }
 
 .product-info {
-  position:relative;
-  float: left;
-  height: 420px;
-  width: 327px;
-  border-radius: 0 7px 10px 7px;
+  height: 210px;
+  width: 300px;
+  border-radius: 0 0 7px 7px;
   background-color: #ffffff;
 }
 
 .product-text {
-  max-height: 300px;
+  max-height: 160px;
   height: auto;
-  width: 327px;
+  width: 300px;
 }
 
 .product-text h1 {
-  margin: 0 0 0 38px;
-  padding-top: 52px;
   font-size: 34px;
   color: #474747;
+  margin: 0px;
+  padding: 10px;
 }
 
 .product-text h1,
@@ -59,18 +95,18 @@
 }
 
 .product-text h2 {
-  margin: 0 0 47px 38px;
   font-size: 13px;
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   text-transform: uppercase;
   color: #d2d2d2;
-  letter-spacing: 0.2em;
+  margin: 0px;
 }
 
 .product-text p {
   height: auto;
-  margin: 0 0 0 38px;
+  margin: 0px;
+  padding: 3px;
   font-family: "Playfair Display", serif;
   color: #8d8d8d;
   line-height: 1.7em;
@@ -80,10 +116,8 @@
 }
 
 .product-price-btn {
-  position:absolute;
-  bottom: 0;
-  height: 103px;
-  width: 327px;
+  height: 50x;
+  width: 300px;
 }
 
 .product-price-btn p {
@@ -100,17 +134,16 @@
 
 span {
   display: inline-block;
-  height: 50px;
+  /* height: 50px; */
   font-family: "Suranna", serif;
   font-size: 34px;
 }
 
 .product-price-btn button {
-  float: right;
   display: inline-block;
   height: 50px;
   width: 176px;
-  margin: 0 40px 0 16px;
+  margin: auto;
   box-sizing: border-box;
   border: transparent;
   border-radius: 60px;
