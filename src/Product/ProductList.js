@@ -1,10 +1,11 @@
 import React from "react";
 import ProductItem from "./ProductItem";
-
-import { data } from "../Data/data";
+import useFetchData from "./useFetchData";
 
 export default function ProductList() {
-  const products = data.products;
+  const { docs } = useFetchData("public/data/products");
+  const products = docs;
+  console.log(products);
   return (
     <div className="product-container">
       {products &&
