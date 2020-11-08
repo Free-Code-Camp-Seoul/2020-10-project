@@ -16,7 +16,7 @@ export default function ProductItem({ item }) {
     <div className="wrapper">
       <div className="product-img">
         <img
-          src={item.imgUrl}
+          src={item.url}
           height="420"
           width="327"
           alt={item.name}
