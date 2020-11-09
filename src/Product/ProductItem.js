@@ -17,8 +17,8 @@ export default function ProductItem({ item }) {
       <div className="product-img">
         <img
           src={item.url}
-          height="420"
-          width="327"
+          height="210"
+          width="300"
           alt={item.name}
           onClick={(e) => goToProductDetails(item.uid)}
         />
