@@ -33,7 +33,7 @@ export default function AddProduct() {
   const { progress, url, err } = useStorage(file);
   const { msg } = useDatabase(product);
 
-  console.log(msg, err);
+  if (err || msg) console.log(msg || err);
 
   const handleAddImage = (e) => {
     let selected = e.target.files[0]; // This will select only ONE file
@@ -78,6 +78,9 @@ export default function AddProduct() {
     if (validate(fields)) {
       //1. Send image to storage
       setFile(selection);
+      setFields(initialValues);
+      setPreview(null);
+      setSelection(null);
       // This will fire the useStorage Hook
       // When the url has returned then we can send the product to the database using the useEffect below
       console.log("done");
