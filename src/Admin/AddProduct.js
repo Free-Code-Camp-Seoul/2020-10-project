@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import useStorage from "./models/useStorage";
 import useDatabase from "./models/useDatabase";
+import ReactHTMLDatalist from "react-html-datalist";
 
 import "./admin.css";
 
 // Components
 import ProgressBar from "./components/ProgressBar";
+import Notification from "./components/Notification";
 
 export default function AddProduct() {
   const initialValues = {
     name: "",
     summary: "",
     description: "",
+    type: "",
     price: 0.0,
     noAvailable: 1,
     forSale: true,
@@ -24,12 +27,13 @@ export default function AddProduct() {
   const types = ["image/png", "image/jpeg"];
   const [file, setFile] = useState(null);
   const [product, setProduct] = useState(null);
+  const [error, setError] = useState("");
 
   // Custsom API Hooks
-  const { progress, url, error } = useStorage(file);
+  const { progress, url, err } = useStorage(file);
   const { msg } = useDatabase(product);
 
-  console.log(msg);
+  if (err || msg) console.log(msg || err);
 
   const handleAddImage = (e) => {
     let selected = e.target.files[0]; // This will select only ONE file
@@ -53,13 +57,34 @@ export default function AddProduct() {
     });
   };
 
-  console.log(fields);
+  const validate = (inputs) => {
+    let valid = true;
+    for (const [key, value] of Object.entries(inputs)) {
+      if (value.length <= 0) {
+        setError(`${key} is required`);
+        valid = false;
+        break;
+      }
+    }
+    if (!selection) {
+      setError(`Please add a photo`);
+      valid = false;
+    }
+    return valid;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //1. Send image to storage
-    setFile(selection); // This will fire the useStorage Hook
-    // When the url has returned then we can send the product to the database using the useEffect below
+    if (validate(fields)) {
+      //1. Send image to storage
+      setFile(selection);
+      setFields(initialValues);
+      setPreview(null);
+      setSelection(null);
+      // This will fire the useStorage Hook
+      // When the url has returned then we can send the product to the database using the useEffect below
+      console.log("done");
+    }
   };
 
   useEffect(() => {
@@ -72,8 +97,6 @@ export default function AddProduct() {
   return (
     <div>
       <h4>Add New Product</h4>
-      {error && <h1>{error}</h1>}
-      {progress && <ProgressBar progress={progress} />}
 
       {/* // INPUT FORM  */}
       <div className="form-inputs">
@@ -109,7 +132,6 @@ export default function AddProduct() {
               <label>Product Summary</label>
               <textarea
                 className="text-input"
-                // type="text"
                 rows="3"
                 cols="16"
                 name="summary"
@@ -127,6 +149,21 @@ export default function AddProduct() {
                 onChange={handleOnChange}
                 value={fields.description}
               ></textarea>
+            </div>
+            <div className="input">
+              <label>Type</label>
+              <ReactHTMLDatalist
+                name={"type"}
+                onChange={handleOnChange}
+                classNames={"text-input"}
+                placeholder={"select from dropdown"}
+                options={[
+                  { text: "Cat", value: "Cat" },
+                  { text: "Dog", value: "Dog" },
+                  { text: "Rabbit", value: "Rabbit" },
+                  { text: "Spider", value: "Spider" },
+                ]}
+              />
             </div>
             <div className="input">
               <label>Price</label>
@@ -170,6 +207,8 @@ export default function AddProduct() {
             </div>
             <button type="submit">Submit</button>
           </form>
+          {error && <Notification error={error} setError={setError} />}
+          {progress && <ProgressBar progress={progress} />}
         </div>
       </div>
     </div>
