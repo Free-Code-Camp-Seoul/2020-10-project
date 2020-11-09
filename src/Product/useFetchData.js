@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import firebase from "../common/lib/firebase";
+const projectDatabase = firebase.database();
 
 const useFetchDatabase = (collection) => {
   const [docs, setDocs] = useState([]);
-  const projectDatabase = firebase.database();
 
   useEffect(() => {
     projectDatabase

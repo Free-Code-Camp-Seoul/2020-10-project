@@ -3,7 +3,7 @@ import firebase from "../../common/lib/firebase";
 
 export const useStorage = (file) => {
   const [progress, setProgress] = useState(null);
-  const [error, setError] = useState(null);
+  const [err, setErr] = useState(null);
   const [url, setUrl] = useState(null);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const useStorage = (file) => {
         setProgress(percentage);
       },
       (err) => {
-        setError(err);
+        setErr(err);
       },
       async () => {
         const url = await storageRef.getDownloadURL();
@@ -30,6 +30,6 @@ export const useStorage = (file) => {
     );
   }, [file]);
 
-  return { progress, url, error };
+  return { progress, url, err };
 };
 export default useStorage;
