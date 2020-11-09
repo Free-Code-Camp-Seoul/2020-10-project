@@ -78,12 +78,9 @@ export default function AddProduct() {
     if (validate(fields)) {
       //1. Send image to storage
       setFile(selection);
-      setFields(initialValues);
-      setPreview(null);
-      setSelection(null);
+
       // This will fire the useStorage Hook
       // When the url has returned then we can send the product to the database using the useEffect below
-      console.log("done");
     }
   };
 
