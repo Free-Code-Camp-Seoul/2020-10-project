@@ -4,7 +4,6 @@ const projectDatabase = firebase.database();
 
 const useFetchDatabase = (collection, filter) => {
   const [docs, setDocs] = useState([]);
-  // const filter = "Cat";
   console.log(filter);
   const connection = () => {
     let query = filter

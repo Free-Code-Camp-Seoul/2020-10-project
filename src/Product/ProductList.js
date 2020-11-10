@@ -9,10 +9,14 @@ export default function ProductList() {
   const products = docs;
   console.log(products);
   return (
-    <div className="product-container">
-      <ProductSearch query={query} setQuery={setQuery} />
-      {products &&
-        products.map((item) => <ProductItem key={item.id} item={item} />)}
+    <div page-container>
+      <div className="search-container">
+        <ProductSearch query={query} setQuery={setQuery} />
+      </div>
+      <div className="product-container">
+        {products &&
+          products.map((item) => <ProductItem key={item.id} item={item} />)}
+      </div>
     </div>
   );
 }
