@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import firebase from "../../common/lib/firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export const useStorage = (file) => {
   const [progress, setProgress] = useState(null);
@@ -11,7 +12,7 @@ export const useStorage = (file) => {
 
     const projectStorage = firebase.storage();
 
-    const storageRef = projectStorage.ref(file.name); // Need to change to id
+    const storageRef = projectStorage.ref("products").child(uuidv4());
 
     storageRef.put(file).on(
       "state_changed",

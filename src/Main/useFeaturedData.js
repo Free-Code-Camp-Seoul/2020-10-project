@@ -2,17 +2,15 @@ import { useState, useEffect } from "react";
 import firebase from "../common/lib/firebase";
 const projectDatabase = firebase.database();
 
-const useFetchDatabase = (collection, filter) => {
+const useFeaturedData = (collection) => {
   const [docs, setDocs] = useState([]);
-  console.log(filter);
   const connection = () => {
-    let query = filter
-      ? projectDatabase
-          .ref(collection)
-          .orderByChild("type")
-          .equalTo(filter)
-          .once("value")
-      : projectDatabase.ref(collection).once("value");
+    let query = projectDatabase
+      .ref(collection)
+      .orderByChild("featured")
+      .equalTo(true)
+      .once("value");
+
     return query;
   };
 
@@ -25,9 +23,9 @@ const useFetchDatabase = (collection, filter) => {
       });
       setDocs(documents);
     });
-  }, [collection, filter]);
+  }, []);
 
   return { docs };
 };
 
-export default useFetchDatabase;
+export default useFeaturedData;
